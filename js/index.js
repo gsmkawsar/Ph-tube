@@ -30,16 +30,46 @@ const clickCategory = async (categoryId = ('1000')) => {
     displayContender(contentAll)
 }  
 
+
+
+
 const displayContender = (contentAll) => {
 
 
+
     const contentContender = document.getElementById('main-contender')
+    const oops = document.getElementById('Oops')
+
+    oops.innerHTML = ""
+    const oopsCard = document.createElement('div')
+    oopsCard.innerHTML =`       
+    <div class=" justify-center mt-60 ">
+    <div class="flex justify-center">
+        <img src="./Icon.png" alt="">
+    </div>
+    <p class="text-3xl text-center mt-5">Oops!! Sorry, There is no content here</p>
+</div>
+    `
+
+    if(contentAll >= 0 ){
+        oops.classList.remove('hidden');
+  
+    }
+    else{
+
+        oops.classList.add('hidden');
+    }
+ 
+
+    oops.appendChild(oopsCard)
+
+
     contentContender.innerHTML = ""
     contentAll.forEach(mainContent => {
     const contentCard = document.createElement('div')
     contentCard.innerHTML =`
 
-    <div class="card w-80 h-80 bg-base-100 shadow-xl">
+    <div class="card w-65 h-80 bg-base-100 shadow-xl">
     <figure><img class=" h-56 " src="${mainContent?.thumbnail}" alt="Shoes" /></figure>
     <div class="card-body">
     <div class="flex">
