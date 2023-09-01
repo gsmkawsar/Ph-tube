@@ -4,7 +4,7 @@ const loadCategory = async () => {
     const  res = await fetch("https://openapi.programming-hero.com/api/videos/categories");
     const data = await res.json();
     const category = data.data;
-    displayCategory(category,)
+    displayCategory(category)
 }  
 
 const displayCategory = (category) => {
@@ -69,6 +69,8 @@ const displayContender = (contentAll) => {
     contentContender.innerHTML = ""
     contentAll.forEach(mainContent => {
     const contentCard = document.createElement('div')
+
+
     contentCard.innerHTML =`
 
     <div class="card w-65 h-80 bg-base-100 shadow-xl">
@@ -85,8 +87,8 @@ const displayContender = (contentAll) => {
       <div class="flex">
         <div class="mr-3">
             <p> ${mainContent?.authors[0]?.profile_name}</p>
-        </div>
-        <img src="./verified.svg" alt="">
+        </div >
+        <img  src=" ${mainContent?.authors[0]?.verified ?`./verified.svg` : '' }" alt="">
       </div>
       <div class=" justify-start">
         <p>  ${mainContent?.others?.views} <span>views</span></p>
@@ -95,6 +97,7 @@ const displayContender = (contentAll) => {
   </div> 
         `
     contentContender.appendChild(contentCard)
+
 
     })
 }
