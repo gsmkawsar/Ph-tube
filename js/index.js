@@ -1,8 +1,10 @@
+
+
 const loadCategory = async () => {
     const  res = await fetch("https://openapi.programming-hero.com/api/videos/categories");
     const data = await res.json();
     const category = data.data;
-    displayCategory(category)
+    displayCategory(category,)
 }  
 
 const displayCategory = (category) => {
@@ -15,19 +17,22 @@ const displayCategory = (category) => {
     `
     categoryContender.appendChild(categoryCard)
 
+
     
 });
 
 }
 
 
-
 const clickCategory = async (categoryId = ('1000')) => {
-    console.log(categoryId)
     const  res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${categoryId}`);
     const data = await res.json();
     const contentAll = data.data;
     displayContender(contentAll)
+       
+    const blogQuestions = document.getElementById('blogQuestions');
+    blogQuestions.innerHTML = ""
+
 }  
 
 
@@ -39,11 +44,10 @@ const displayContender = (contentAll) => {
 
     const contentContender = document.getElementById('main-contender')
     const oops = document.getElementById('Oops')
-
     oops.innerHTML = ""
     const oopsCard = document.createElement('div')
     oopsCard.innerHTML =`       
-    <div class=" justify-center mt-60 ">
+    <div class=" justify-center mt-10 ">
     <div class="flex justify-center">
         <img src="./Icon.png" alt="">
     </div>
@@ -51,7 +55,7 @@ const displayContender = (contentAll) => {
 </div>
     `
 
-    if(contentAll >= 0 ){
+    if(contentAll >= false ){
         oops.classList.remove('hidden');
   
     }
@@ -60,9 +64,7 @@ const displayContender = (contentAll) => {
         oops.classList.add('hidden');
     }
  
-
     oops.appendChild(oopsCard)
-
 
     contentContender.innerHTML = ""
     contentAll.forEach(mainContent => {
@@ -95,10 +97,41 @@ const displayContender = (contentAll) => {
     contentContender.appendChild(contentCard)
 
     })
-
 }
+
+
+
+
+
+
 
 
 clickCategory()
 
 loadCategory()
+
+
+const clickBlog = () => {
+
+    const contentContender = document.getElementById('main-contender')
+    contentContender.innerHTML = ""
+
+    const oops = document.getElementById('Oops')
+    oops.classList.add('hidden');
+
+    const blogQuestions = document.getElementById('blogQuestions');
+    const blogCard = document.createElement('div');
+    blogQuestions.innerHTML = ""
+    blogCard.innerHTML =`
+
+    <h3 class="text-1xl font-bold my-2">Discuss the scope of var, let, and const</h3>
+    <p><span class="font-bold">Answer:</span> var declarations are globally scoped or function scoped while let and const are block scoped. var variables can be updated and re-declared within its scope; let variables can be updated but not re-declared; const variables can neither be updated nor re-declared.</p>
+    <h3 class="text-1xl font-bold my-2">Tell us the use cases of null and undefined</h3>
+    <p><span class="font-bold">Answer:</span> Undefined means the variable has been declared, but its value has not been assigned. Null means an empty value or a blank value. The typeof() operator returns undefined for an undefined variable. The typeof() operator returns the type as an object for a variable whose value is assigned as null.</p>
+    <h3 class="text-1xl font-bold my-2">What do you mean by REST API?</h3>
+    <p><span class="font-bold">Answer:</span> An API, or application programming interface, is a set of rules that define how applications or devices can connect to and communicate with each other. A REST API is an API that conforms to the design principles of the REST, or representational state transfer architectural style.</p>
+    `
+    blogQuestions.appendChild(blogCard)
+   
+}
+
