@@ -73,8 +73,12 @@ const displayContender = (contentAll) => {
 
     contentCard.innerHTML =`
 
-    <div class="card w-65 h-80 bg-base-100 shadow-xl">
-    <figure><img class=" h-56 " src="${mainContent?.thumbnail}" alt="Shoes" /></figure>
+    <div class="card w-65 h-80 bg-base-100 shadow-xl ">
+    <figure><img class=" h-38 " src="${mainContent?.thumbnail}" alt="Shoes" /></figure>
+    <div class="  relative">
+    <p class=" absolute right-2 bottom-2 rounded-lg bg-zinc-600 text-white px-1 ">3hour 56min ago</p>
+    </div>
+
     <div class="card-body">
     <div class="flex">
     <img class="w-9 h-9 rounded-full" src="${mainContent?.authors[0]?.profile_picture}" alt="">
