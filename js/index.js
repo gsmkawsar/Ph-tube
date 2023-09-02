@@ -3,7 +3,7 @@
 const loadCategory = async () => {
     const  res = await fetch("https://openapi.programming-hero.com/api/videos/categories");
     const data = await res.json();
-    const category = data.data;
+    const category = data.data;   
     displayCategory(category)
 }  
 
@@ -13,7 +13,9 @@ const displayCategory = (category) => {
     // console.log(menu)
     const categoryCard = document.createElement('div')
     categoryCard.innerHTML =`
-    <input onclick="clickCategory('${menu.category_id}')" class="join-item btn mx-2" type="radio" name="options" aria-label="${menu.category}" />
+    <input onclick="clickCategory('${menu.category_id}')" 
+    onclick="clickDisplaySortView('${menu.category_id}')" 
+    class="join-item btn mx-2" type="radio" name="options" aria-label="${menu.category}" />
     `
     categoryContender.appendChild(categoryCard)
 
@@ -72,15 +74,8 @@ const displayContender = (contentAll) => {
     const Seconds = `${mainContent?.others?.posted_date};`
     const sec = parseFloat(Seconds);
 
-            let S = sec % 60;
-            let H = Math.floor(sec / 3600);
-            let M = Math.floor((sec % 3600) / 60) ;
-
-  
-
-          
- 
-
+    let H = Math.floor(sec / 3600);
+    let M = Math.floor((sec % 3600) / 60) ;
 
     contentCard.innerHTML =`
 
@@ -88,8 +83,7 @@ const displayContender = (contentAll) => {
     <figure><img class=" h-38 " src="${mainContent?.thumbnail}" alt="Shoes" /></figure>
     
     <div class="  relative">
-    ${M? `<p class=" absolute right-2 bottom-2 rounded-lg bg-zinc-600 text-white px-1 ">${H? H : '' } hour ${M? M: ''} min ago</p>` : ''}
-   
+    ${M? `<p class=" absolute right-2 bottom-2 rounded-lg bg-zinc-600 text-white px-1 ">${H} hour ${M} min ago</p>` : ''}
     </div>
    
     <div class="card-body">
@@ -121,13 +115,7 @@ const displayContender = (contentAll) => {
 
 
 
-
-
-
-
-
 clickCategory()
-
 loadCategory()
 
 
@@ -153,5 +141,92 @@ const clickBlog = () => {
     `
     blogQuestions.appendChild(blogCard)
    
+}
+
+
+
+
+
+const clickDisplaySortView = async (categoryId = ('1000')) => {
+    const  res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${categoryId}`);
+    const data = await res.json();
+    const contentAll = data.data;
+    displaySortView(contentAll)  
+    console.log(categoryId)
+
+}  
+
+
+
+const displaySortView = (contentAll) => {
+    console.log(contentAll)
+
+    const contentContender = document.getElementById('main-contender')
+    const oops = document.getElementById('Oops')
+    oops.innerHTML = ""
+    const oopsCard = document.createElement('div')
+    oopsCard.innerHTML =`       
+    <div class=" justify-center mt-10 ">
+    <div class="flex justify-center">
+        <img src="./Icon.png" alt="">
+    </div>
+    <p class="text-3xl text-center mt-5">Oops!! Sorry, There is no content here</p>
+</div>
+    `
+
+    if(contentAll >= false ){
+        oops.classList.remove('hidden');
+  
+    }
+    else{
+
+        oops.classList.add('hidden');
+    }
+ 
+    oops.appendChild(oopsCard)
+
+    contentContender.innerHTML = ""
+    contentAll.forEach(mainContent => {
+    const contentCard = document.createElement('div')
+    const Seconds = `${mainContent?.others?.posted_date};`
+    const sec = parseFloat(Seconds);
+
+    let H = Math.floor(sec / 3600);
+    let M = Math.floor((sec % 3600) / 60) ;
+
+    contentCard.innerHTML =`
+
+    <div class="card w-65 h-80 bg-base-100 shadow-xl ">
+    <figure><img class=" h-38 " src="${mainContent?.thumbnail}" alt="Shoes" /></figure>
+    
+    <div class="  relative">
+    ${M? `<p class=" absolute right-2 bottom-2 rounded-lg bg-zinc-600 text-white px-1 ">${H} hour ${M} min ago</p>` : ''}
+    </div>
+   
+    <div class="card-body">
+    <div class="flex">
+    <img class="w-9 h-9 rounded-full" src="${mainContent?.authors[0]?.profile_picture}" alt="">
+    <div class="ml-3">
+        <h2 class="card-title">
+            ${mainContent?.title}
+        </h2>
+    </div>
+  </div>
+      <div class="flex">
+        <div class="mr-3">
+            <p> ${mainContent?.authors[0]?.profile_name}</p>
+        </div >
+        <img  src=" ${mainContent?.authors[0]?.verified ?`./verified.svg` : '' }" alt="">
+      </div>
+      <div class=" justify-start">
+        <p>  ${mainContent?.others?.views} <span>views</span></p>
+      </div>
+    </div>
+  </div> 
+        `
+    contentContender.appendChild(contentCard)
+
+
+    })
 }
 
